@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/websvc"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05" >
+    <wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/checkPaymentStatusRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/checkPaymentStatusRS.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getItineraryInfo/getItineraryInfoRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getItineraryInfo/getItineraryInfoRS.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/addMoreBaggage/addMoreBaggageRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/addMoreBaggage/addMoreBaggageRS.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+    <wsdl:message name="checkPaymentStatusInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:checkPaymentStatusRQ"/>
+	</wsdl:message>
+	<wsdl:message name="checkPaymentStatusOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:checkPaymentStatusRS"/>
+	</wsdl:message>
+	<wsdl:message name="getItineraryInfoInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getItineraryInfoRQ"/>
+	</wsdl:message>
+	<wsdl:message name="getItineraryInfoOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getItineraryInfoRS"/>
+	</wsdl:message>
+	<wsdl:message name="addMoreBaggageInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:addMoreBaggageRQ"/>
+	</wsdl:message>
+	<wsdl:message name="addMoreBaggageOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:addMoreBaggageRS"/>
+	</wsdl:message>
+
+    <wsdl:portType name="AssistantPortType">
+		<wsdl:operation name="checkPaymentStatus">
+			<wsdl:input message="pd:checkPaymentStatusInput"/>
+			<wsdl:output message="pd:checkPaymentStatusOutput"/>
+		</wsdl:operation>
+		<wsdl:operation name="getItineraryInfo">
+			<wsdl:input message="pd:getItineraryInfoInput"/>
+			<wsdl:output message="pd:getItineraryInfoOutput"/>
+		</wsdl:operation>
+		<wsdl:operation name="addMoreBaggage">
+			<wsdl:input message="pd:addMoreBaggageInput"/>
+			<wsdl:output message="pd:addMoreBaggageOutput"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+    <wsdl:binding name="AssistantSoapBinding" type="xsd1:AssistantPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="checkPaymentStatus">
+			<soap:operation soapAction="http://www.booking.com/checkPaymentStatus"/>
+			<wsdl:input>
+				<soap:header message="pd:checkPaymentStatusInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:checkPaymentStatusOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+        <wsdl:operation name="getItineraryInfo">
+			<soap:operation soapAction="http://www.booking.com/getItineraryInfo"/>
+			<wsdl:input>
+				<soap:header message="pd:getItineraryInfoInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getItineraryInfoOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="addMoreBaggage">
+			<soap:operation soapAction="http://www.booking.com/addMoreBaggage"/>
+			<wsdl:input>
+				<soap:header message="pd:addMoreBaggageInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:addMoreBaggageOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+    </wsdl:binding>
+	<wsdl:service name="AssistantService">
+		<wsdl:port binding="AssistantSoapBinding" name="pd:AssistantPortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

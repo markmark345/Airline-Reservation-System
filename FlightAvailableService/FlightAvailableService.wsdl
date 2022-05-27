@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/websvc"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05" >
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getFlightavailableRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getFlightavailableRS.xsd"/>
+        </xsd:schema>
+	</wsdl:types>
+    
+    <wsdl:message name="getFlightavailableInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getFlightavailableR"/>
+	</wsdl:message>
+
+	<wsdl:message name="getFlightavailableOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getFlightavailableRS"/>
+	</wsdl:message>
+
+    <wsdl:portType name="FlightavailablePortType">
+		<wsdl:operation name="getFlightavailableInfo">
+			<wsdl:input message="pd:getFlightavailableRQ"/>
+			<wsdl:output message="pd:getFlightavailableRS"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+    <wsdl:binding name="FlightavailableSoapBinding" type="xsd1:FlightavailablePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="FlightavailableInfo">
+			<soap:operation soapAction="http://www.booking.com/getFlightavailableInfo"/>
+			<wsdl:input>
+				<soap:header message="pd:getFlightavailableInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getFlightavailableOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="FlightavailableService">
+		<wsdl:port binding="FlightavailableSoapBinding" name="pd:FlightavailablePortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+
+
+</wsdl:definitions>

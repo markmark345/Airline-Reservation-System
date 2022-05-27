@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/websvc"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05" >
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createSearch/createSearchRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createSearch/createSearchRS.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/getPromotionPriceRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/getPromotionPriceRS.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/recalculatePriceRQ.xsd"/>
+			<xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/checkPaymentStatus/recalculatePriceRS.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="createSearchInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createSearchRQ"/>
+	</wsdl:message>
+	<wsdl:message name="createSearchOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createSearchRS"/>
+	</wsdl:message>
+	<wsdl:message name="getPromotionPriceInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getPromotionPriceRQ"/>
+	</wsdl:message>
+	<wsdl:message name="getPromotionPriceOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getPromotionPriceRS"/>
+	</wsdl:message>
+	<wsdl:message name="recalculatePriceInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:recalculatePriceRQ"/>
+	</wsdl:message>
+	<wsdl:message name="recalculatePriceOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:recalculatePriceRS"/>
+	</wsdl:message>
+
+	<wsdl:portType name="AgentFarePortType">
+		<wsdl:operation name="createSearch">
+			<wsdl:input message="pd:createSearchInput"/>
+			<wsdl:output message="pd:createSearchOutput"/>
+		</wsdl:operation>
+		<wsdl:operation name="getPromotionPrice">
+			<wsdl:input message="pd:getPromotionPriceInput"/>
+			<wsdl:output message="pd:getPromotionPriceOutput"/>
+		</wsdl:operation>
+		<wsdl:operation name="recalculatePrice">
+			<wsdl:input message="pd:recalculatePriceInput"/>
+			<wsdl:output message="pd:recalculatePriceOutput"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="AgentFareSoapBinding" type="xsd1:AgentFarePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="createSearch">
+			<soap:operation soapAction="http://www.booking.com/createSearch"/>
+			<wsdl:input>
+				<soap:header message="pd:createSearchInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:createSearchOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getPromotionPrice">
+			<soap:operation soapAction="http://www.booking.com/getPromotionPrice"/>
+			<wsdl:input>
+				<soap:header message="pd:getPromotionPriceInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getPromotionPriceOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="recalculatePrice">
+			<soap:operation soapAction="http://www.booking.com/recalculatePrice"/>
+			<wsdl:input>
+				<soap:header message="pd:recalculatePriceInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:recalculatePriceOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+	</wsdl:binding>
+	<wsdl:service name="AgentFareService">
+		<wsdl:port binding="AgentFareSoapBinding" name="pd:AgentFarePortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

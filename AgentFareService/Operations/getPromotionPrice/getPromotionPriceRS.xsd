@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="CarrierCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Z]{2,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Numeric0to9">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Used for Numeric values, from 0 to 9 inclusive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="UpperCaseAlphaNumericLength3to5">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Used for an Upper Alpha String and Numeric, length 3 to 5.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9]{3,5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="IntDateTime">
+        <xs:annotation>
+            <xs:documentation>IntelliSell Date Time type</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="getPromotionPriceRS">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="OriginDestinationInformation">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="DepartureDate" type="IntDateTime" minOccurs="1"/>
+                            <xs:element name="DeparutreAirport" type="UpperCaseAlphaNumericLength3to5" minOccurs="1"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="PassengerInformation">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="NumberOfAdult" type="Numeric0to9" minOccurs="1" maxOccurs="9"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="PromoCode">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="PromotionCode" minOccurs="0" maxOccurs="99">
+                                <xs:annotation>
+                                    <xs:documentation>Promotion Code (or Codes) used to determine applicable promotion.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="Value" use="required">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:pattern value="[A-Za-z0-9_]+"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="AirlineCode" type="CarrierCode"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

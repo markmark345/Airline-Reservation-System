@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="DiscountType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">A single letter cabin code in SABRE encoding as opposed to ATPCO encoding</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Percentage">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Percentage</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NumberDiscount">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Digit</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="CarrierCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Z]{2,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="PromotionmarketRS">
+        <xs:complexType> 
+            <xs:all>
+                <xs:element name = "TypeOfdiscount" type="DiscountType" minOccurs="1"/>
+                <xs:element name = "discount" type = "xs:decimal" minOccurs="1"/>
+                <xs:element name = "Airlinecode" type = "CarrierCode"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/websvc"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05" >
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/PromotionMKTRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/PromotionMKTRS.xsd"/>
+        </xsd:schema>
+	</wsdl:types>
+
+    <wsdl:message name="promoteInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:PromotionMKTRQ"/>
+	</wsdl:message>
+
+	<wsdl:message name="promteOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:PromotionMKTRS"/>
+	</wsdl:message>
+
+    <wsdl:portType name="PromotionPortType">
+		<wsdl:operation name="getPromotionMKTInfo">
+			<wsdl:input message="pd:PromotionRQ"/>
+			<wsdl:output message="pd:PromotionRS"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+    <wsdl:binding name="PromotionSoapBinding" type="xsd1:PromotionPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="PromotionMKTInfo">
+			<soap:operation soapAction="http://www.booking.com/getFlightavailableInfo"/>
+			<wsdl:input>
+				<soap:header message="pd:promoteInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:promteOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="PromotionMKTService">
+		<wsdl:port binding="PromotionSoapBinding" name="pd:PromotionPortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

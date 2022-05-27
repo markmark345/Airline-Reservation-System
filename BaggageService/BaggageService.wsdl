@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/sp/pd/v3_3"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.booking.com/namespaces/addBaggageRQ" schemaLocation="Operations/addBaggageRQ.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/addBaggageRS" schemaLocation="Operations/addBaggageRS.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="addBaggageRQ">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:addBaggageRQ"/>
+	</wsdl:message>
+
+	<wsdl:message name="addBaggageRS">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:addBaggageRS"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="BaggagePortType">
+		<wsdl:operation name="addBaggage">
+			<wsdl:input message="pd:addBaggageRQ"/>
+			<wsdl:output message="pd:addBaggageRS"/>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+	<wsdl:binding name="BaggageSoapBinding" type="xsd1:BaggagePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addBaggage">
+			<soap:operation soapAction="http://www.booking.com/addBaggage"/>
+			<wsdl:input>
+				<soap:header message="pd:addBaggageRQ" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:addBaggageRS" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+	</wsdl:binding>
+	<wsdl:service name="BaggageService">
+		<wsdl:port binding="BaggageSoapBinding" name="pd:BaggagePortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

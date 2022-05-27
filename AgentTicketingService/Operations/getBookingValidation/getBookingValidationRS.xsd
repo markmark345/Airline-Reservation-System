@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="AirlineCodeType">
+        <xs:annotation>
+            <xs:documentation>Airline Carrier Code</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="getItineraryStatusRS">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="PNRCode" type="xs:string" minOccurs="0"/>
+                <xs:element name="AirlineCode" type="AirlineCodeType"/>
+                <xs:element name="GDSToken" type="xs:string" minOccurs="0"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

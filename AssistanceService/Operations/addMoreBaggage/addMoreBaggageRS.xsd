@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="StringLength1to16">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Used for Character Strings, length 1 to 16</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="addMoreBaggateRS">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="PNRCode" type="xs:string" minOccurs="0"/>
+                <xs:element name="GDSToken" type="xs:string"/>
+                <xs:element name="AgentCode" type="StringLength1to16"/>
+                <xs:element name="Weight" type="xs:decimal"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="checkPaymentStatusRS">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="Message" type="xs:string"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

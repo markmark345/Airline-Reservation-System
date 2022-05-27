@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/sp/pd/v3_3"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.booking.com/namespaces/bookAirSegmentRQ" schemaLocation="bookAirSegment/bookAirSegmentRQ.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/bookAirSegmentRS" schemaLocation="bookAirSegment/bookAirSegmentRS.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/getltineraryValidateRQ" schemaLocation="getltineraryValidate/getltineraryValidateRQ.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/getltineraryValidateRS" schemaLocation="getltineraryValidate/getltineraryValidateRS.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/InputPassengerDetailRQ" schemaLocation="InputPassengerDetail/InputPassengerDetailRQ.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/InputPassengerDetailRS" schemaLocation="InputPassengerDetail/InputPassengerDetailRS.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/issueTicketRQ" schemaLocation="issueTicket/issueTicketRQ.xsd"/>
+			<xsd:import namespace="http://www.booking.com/namespaces/issueTicketRS" schemaLocation="issueTicket/issueTicketRS.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="bookAirSegmentRQ">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:bookAirSegmentRQ"/>
+	</wsdl:message>
+	<wsdl:message name="bookAirSegmentRS">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:bookAirSegmentRS"/>
+	</wsdl:message>
+	<wsdl:message name="getltineraryValidateRQ">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getltineraryValidateRQ"/>
+	</wsdl:message>
+	<wsdl:message name="getltineraryValidateRS">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getltineraryValidateRS"/>
+	</wsdl:message>
+	<wsdl:message name="InputPassengerDetailRQ">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:InputPassengerDetailRQ"/>
+	</wsdl:message>
+	<wsdl:message name="InputPassengerDetailRS">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:InputPassengerDetailRS"/>
+	</wsdl:message>
+		<wsdl:message name="issueTicketRQ">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:issueTicketRQ"/>
+	</wsdl:message>
+	<wsdl:message name="issueTicketRS">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:issueTicketRS"/>
+	</wsdl:message>
+
+
+	<wsdl:portType name="GDSBookingPortType">
+		<wsdl:operation name="bookAirSegment">
+			<wsdl:input message="pd:bookAirSegmentRQ"/>
+			<wsdl:output message="pd:bookAirSegmentRS"/>
+			<wsdl:fault message="pd:faultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="getltineraryValidate">
+			<wsdl:input message="pd:getltineraryValidateRQ"/>
+			<wsdl:output message="pd:getltineraryValidateRS"/>
+		</wsdl:operation>
+		<wsdl:operation name="InputPassengerDetail">
+			<wsdl:input message="pd:InputPassengerDetailRQ"/>
+			<wsdl:output message="pd:InputPassengerDetailRS"/>
+		</wsdl:operation>
+		<wsdl:operation name="issueTicket">
+			<wsdl:input message="pd:issueTicketRQ"/>
+			<wsdl:output message="pd:issueTicketRS"/>
+			<wsdl:fault message="pd:faultMessage"/>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+	<wsdl:binding name="GDSBookingSoapBinding" type="xsd1:GDSBookingPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="bookAirSegment">
+			<soap:operation soapAction="http://www.booking.com/bookAirSegment"/>
+			<wsdl:input>
+				<soap:header message="pd:bookAirSegmentRQ" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:bookAirSegmentRS" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getltineraryValidate">
+			<soap:operation soapAction="http://www.booking.com/getltineraryValidate"/>
+			<wsdl:input>
+				<soap:header message="pd:getltineraryValidateRQ" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getltineraryValidateRS" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="InputPassengerDetail">
+			<soap:operation soapAction="http://www.booking.com/InputPassengerDetail"/>
+			<wsdl:input>
+				<soap:header message="pd:InputPassengerDetailRQ" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:InputPassengerDetailRS" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="issueTicket">
+			<soap:operation soapAction="http://www.booking.com/issueTicket"/>
+			<wsdl:input>
+				<soap:header message="pd:issueTicketRQ" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:issueTicketRS" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+
+	</wsdl:binding>
+	<wsdl:service name="GDSBookingService">
+		<wsdl:port binding="GDSBookingSoapBinding" name="pd:GDSBookingPortType">
+			<soap:address location="https://www.booking.com"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

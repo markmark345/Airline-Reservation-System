@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  xmlns:eb="http://www.ebxml.org/namespaces/messageHeader"
+				  xmlns:pd="http://www.booking.com/websvc"
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:xsd1="http://www.opentravel.org/OTA/2003/05" >
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://www.ebxml.org/namespaces/messageHeader" schemaLocation="built-ins/msg-header-2_0.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createBookingByAirSegmentRequest/createBookingByAirSegmentRequestRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createBookingByAirSegmentRequest/createBookingByAirSegmentRequestRS.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createPassengerDetailRequest/createPassengerDetailRequestRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/createPassengerDetailRequest/createPassengerDetailRequestRS.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getBookingValidation/getBookingValidationRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getBookingValidation/getBookingValidationRS.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getItineraryStatus/getItineraryStatusRQ.xsd"/>
+            <xsd:import namespace="http://www.opentravel.org/OTA/2003/05" schemaLocation="Operations/getItineraryStatus/getItineraryStatusRS.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="createBookingByAirSegmentRequestInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createBookingByAirSegmentRequestRQ"/>
+	</wsdl:message>
+	<wsdl:message name="createBookingByAirSegmentRequestOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createBookingByAirSegmentRequestRS"/>
+	</wsdl:message>
+
+    <wsdl:message name="createPassengerDetailRequestInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createPassengerDetailRequestRQ"/>
+	</wsdl:message>
+	<wsdl:message name="createPassengerDetailRequestOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:createPassengerDetailRequestRS"/>
+	</wsdl:message>
+    <wsdl:message name="getBookingValidationInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getBookingValidationRQ"/>
+	</wsdl:message>
+	<wsdl:message name="getBookingValidationOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getBookingValidationhRS"/>
+	</wsdl:message>
+    <wsdl:message name="getItineraryStatusInput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getItineraryStatusRQ"/>
+	</wsdl:message>
+	<wsdl:message name="getItineraryStatusOutput">
+		<wsdl:part name="header" element="eb:MessageHeader"/>
+		<wsdl:part name="body" element="xsd1:getItineraryStatusRS"/>
+	</wsdl:message>
+
+    <wsdl:portType name="AgentTicketingPortType">
+		<wsdl:operation name="createBookingByAirSegmentRequest">
+			<wsdl:input message="pd:createBookingByAirSegmentRequestInput"/>
+			<wsdl:output message="pd:createBookingByAirSegmentRequestOutput"/>
+		</wsdl:operation>
+        <wsdl:operation name="createPassengerDetailRequest">
+			<wsdl:input message="pd:createPassengerDetailRequestInput"/>
+			<wsdl:output message="pd:createPassengerDetailRequestOutput"/>
+		</wsdl:operation>
+        <wsdl:operation name="getBookingValidation">
+			<wsdl:input message="pd:getBookingValidationInput"/>
+			<wsdl:output message="pd:getBookingValidationOutput"/>
+		</wsdl:operation>
+        <wsdl:operation name="getItineraryStatus">
+			<wsdl:input message="pd:getItineraryStatusInput"/>
+			<wsdl:output message="pd:getItineraryStatusOutput"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+    <wsdl:binding name="AgentTicketingSoapBinding" type="xsd1:AgentTicketingPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="createBookingByAirSegmentRequest">
+			<soap:operation soapAction="http://www.booking.com/createBookingByAirSegmentRequest"/>
+			<wsdl:input>
+				<soap:header message="pd:createBookingByAirSegmentRequestInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:createBookingByAirSegmentRequestOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="createPassengerDetailRequest">
+			<soap:operation soapAction="http://www.booking.com/createPassengerDetailRequest"/>
+			<wsdl:input>
+				<soap:header message="pd:createPassengerDetailRequestInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:createPassengerDetailRequestOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getBookingValidation">
+			<soap:operation soapAction="http://www.booking.com/getBookingValidation"/>
+			<wsdl:input>
+				<soap:header message="pd:getBookingValidationInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getBookingValidationOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+        <wsdl:operation name="getItineraryStatus">
+			<soap:operation soapAction="http://www.booking.com/getItineraryStatus"/>
+			<wsdl:input>
+				<soap:header message="pd:getItineraryStatusInput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:header message="pd:getItineraryStatusOutput" part="header" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="AgentTicketingService">
+        <wsdl:port binding="AgentTicketingSoapBinding" name="pd:AgentTicketingPortType">
+            <soap:address location="https://www.booking.com"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
